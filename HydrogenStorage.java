@@ -1,7 +1,7 @@
 public class HydrogenStorage extends EnergyStorage {
     
     public HydrogenStorage(double capacity) {
-        super(capacity, 0.5);
+        super(capacity, 0.55);
         name = "Hydrogen Storage";
     }
 }

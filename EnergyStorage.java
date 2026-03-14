@@ -39,7 +39,6 @@ public abstract class EnergyStorage {
         }
     }
 
-    @Override
     public String toString() {
         return name + ": " + currentEnergy + " / " + capacity + " MWh";
     }

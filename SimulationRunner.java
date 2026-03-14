@@ -59,8 +59,18 @@ public class SimulationRunner {
                             System.out.print("Solar farm capacity (MW): ");
                             double capacity = scanner.nextDouble();
 
-                            System.out.print("Efficiency (0-1): ");
-                            double solarEfficiency = scanner.nextDouble();
+                            double solarEfficiency;
+
+                            while (true) {
+                                System.out.print("Efficiency (0-1): ");
+                                solarEfficiency = scanner.nextDouble();
+                                
+                                if (solarEfficiency >= 0 && solarEfficiency <= 1) {
+                                    break;
+                                }
+
+                                System.out.println("Invalid Input: Efficiency must be between 0 and 1");
+                            }
 
                             SolarFarm solar = new SolarFarm(capacity, solarEfficiency, "land");
                             network.addEnergySource(solar);
@@ -77,8 +87,18 @@ public class SimulationRunner {
                             System.out.print("Turbine capacity (MW): ");
                             double turbineCapacity = scanner.nextDouble();
 
-                            System.out.print("Efficiency (0-1): ");
-                            double windEfficiency = scanner.nextDouble();
+                            double windEfficiency;
+
+                            while (true) {
+                                System.out.print("Efficiency (0-1): ");
+                                windEfficiency = scanner.nextDouble();
+                                
+                                if (windEfficiency >= 0 && windEfficiency <= 1) {
+                                    break;
+                                }
+
+                                System.out.println("Invalid Input: Efficiency must be between 0 and 1");
+                            }
 
                             System.out.print("Location (land/offshore): ");
                             String location = scanner.nextLine();
