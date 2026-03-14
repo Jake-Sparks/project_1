@@ -121,13 +121,14 @@ Characterisitcs of the storage systems (based on real-world systems):
 
 
 Users specify the number of days to simulate:
-Enter number of days: 30
+- Enter number of days: 30
 
 Each day the simulation generates random weather conditions:
 
 - Wind speed
 - Solar intensity
 - Sun hours
+
 These affect renewable generation.
 
 The system then:
@@ -144,28 +145,31 @@ Example daily output:
 DAY 4
 
 Weather Report
-Wind Speed: 9.4 m/s
-Sun Intensity: 0.71
-Sun Hours: 5.2
+
+- Wind Speed: 9.4 m/s
+- Sun Intensity: 0.71
+- Sun Hours: 5.2
 
 Energy Report
-Production: 2450 MWh
-Demand: 2300 MWh
+
+- Production: 2450 MWh
+- Demand: 2300 MWh
 
 Storage Status
-Battery Storage: 1500 / 2000 MWh
-Pumped Hydro Storage: 600 / 1000 MWh
-Hydrogen Storage: 400 / 2000 MWh
+
+- Battery Storage: 1500 / 2000 MWh
+- Pumped Hydro Storage: 600 / 1000 MWh
+- Hydrogen Storage: 400 / 2000 MWh
 
 Recommended Test Scenarios:
 
 **Small City**
 
-Population: 10,000
-Consumption: 20
-Solar farm: 100 MW
-Wind farm: 10 turbines (3 MW)
-Battery: 500 MWh
+Population: 10,000\n
+Consumption: 20\n
+Solar farm: 100 MW\n
+Wind farm: 10 turbines (3 MW)\n
+Battery: 500 MWh\n
 
 **Expected behavior:**
 
