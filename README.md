@@ -114,10 +114,10 @@ Battery storage capacity: 2000 MWh
 
 Characterisitcs of the storage systems (based on real-world systems):
 
-Storage Type	 Efficiency	  Typical Use
-Battery	       95%	        short-term storage
-Pumped hydro	 80%	        large-scale grid storage
-Hydrogen	     55%	        long-term seasonal storage
+- Storage Type	 Efficiency	  Typical Use
+- Battery	       95%	        short-term storage
+- Pumped hydro	 80%	        large-scale grid storage
+- Hydrogen	     55%	        long-term seasonal storage
 
 
 Users specify the number of days to simulate:
