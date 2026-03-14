@@ -1,0 +1,234 @@
+import java.util.Scanner;
+
+public class SimulationRunner {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        
+        EnergyNetwork network = new EnergyNetwork();
+        City city = null;
+        boolean running = true;
+
+        while (running) {
+
+            System.out.println("\n==== SMART RENEWABLE CITY SIMULATION ====");
+            System.out.println("1. Create City");
+            System.out.println("2. Add Energy Source");
+            System.out.println("3. Add Storage System");
+            System.out.println("4. View System Details");
+            System.out.println("5. Run Simulation (Daily Report)");
+            System.out.println("6. Run Simulation (Summary Only)");
+            System.out.println("7. Exit");
+
+            System.out.print("Select option: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+
+                case 1:
+
+                    if (city != null) {
+                        System.out.println("A city has already been created.");
+                        break;
+                    }
+
+                    System.out.print("Enter city population: ");
+                    int population = scanner.nextInt();
+
+                    System.out.print("Enter average daily consumption (kWh per person): ");
+                    double consumption = scanner.nextDouble();
+
+                    city = new City(population, consumption);
+                    System.out.println("City created successfully.");
+
+                    break;
+
+                case 2:
+
+                    System.out.println("\nAdd Energy Source");
+                    System.out.println("1. Solar Farm");
+                    System.out.println("2. Wind Farm");
+
+                    int sourceChoice = scanner.nextInt();
+
+                    switch (sourceChoice) {
+
+                        case 1:
+
+                            System.out.print("Solar farm capacity (MW): ");
+                            double capacity = scanner.nextDouble();
+
+                            System.out.print("Efficiency (0-1): ");
+                            double solarEfficiency = scanner.nextDouble();
+
+                            SolarFarm solar = new SolarFarm(capacity, solarEfficiency, "land");
+                            network.addEnergySource(solar);
+
+                            System.out.println("Solar farm added.");
+                            break;
+
+
+                        case 2:
+
+                            System.out.print("Number of turbines: ");
+                            int turbines = scanner.nextInt();
+
+                            System.out.print("Turbine capacity (MW): ");
+                            double turbineCapacity = scanner.nextDouble();
+
+                            System.out.print("Efficiency (0-1): ");
+                            double windEfficiency = scanner.nextDouble();
+
+                            System.out.print("Location (land/offshore): ");
+                            String location = scanner.nextLine();
+
+                            WindFarm wind = new WindFarm(windEfficiency, location, turbines, turbineCapacity);
+                            network.addEnergySource(wind);
+
+                            System.out.println("Wind farm added.");
+
+                            break;
+
+                        default:
+                            System.out.println("Invalid energy source.");
+                    }
+
+                    break;
+
+                case 3:
+
+                    System.out.println("\nAdd Storage System");
+                    System.out.println("1. Battery Storage");
+                    System.out.println("2. Pumped Hydro Storage");
+                    System.out.println("3. Hydrogen Storage");
+
+                    int storageChoice = scanner.nextInt();
+
+                    System.out.print("Enter storage capacity (MWh): ");
+                    double storageCapacity = scanner.nextDouble();
+
+                    switch (storageChoice) {
+
+                        case 1:
+                            BatteryStorage battery = new BatteryStorage(storageCapacity);
+                            network.addStorage(battery);
+                            System.out.println("Battery storage added.");
+                            break;
+
+                        case 2:
+                            PumpedHydro hydro = new PumpedHydro(storageCapacity);
+                            network.addStorage(hydro);
+                            System.out.println("Pumped hydro storage added.");
+                            break;
+
+                        case 3:
+                            HydrogenStorage hydrogen = new HydrogenStorage(storageCapacity);
+                            network.addStorage(hydrogen);
+                            System.out.println("Hydrogen storage added.");
+                            break;
+
+                        default:
+                            System.out.println("Invalid storage type.");
+                    }
+
+                    break;
+
+
+                case 4:
+
+                    System.out.println("\n======= CITY NETWORK DETAILS =======");
+
+                    if (city == null) {
+                        System.out.println("No city created yet.");
+                    } else {
+                        System.out.println("City population: " + city.getPopulation());
+                        System.out.println("Average consumption: " + city.getAverageConsumption() + " kWh per person");
+                    }
+
+                    System.out.println("\nEnergy Sources Installed: " + network.getEnergySources().size());
+                    System.out.println("Storage Systems Installed: " + network.getStorageSystems().size());
+
+                    System.out.println("\nStorage Status:");
+
+                    for (int i = 0; i < network.getStorageSystems().size(); i++) {
+                        EnergyStorage storage = network.getStorageSystems().get(i);
+                        System.out.println(storage);
+                    }
+
+                    break;
+
+                case 5:
+                case 6:
+
+                    if (city == null) {
+                        System.out.println("Please create a city first.");
+                        break;
+                    }
+
+                    System.out.print("Enter number of days to simulate: ");
+                    int days = scanner.nextInt();
+
+                    double totalProduction = 0;
+                    double totalDemand = 0;
+                    int blackoutDays = 0;
+
+                    for (int day = 1; day <= days; day++) {
+
+                        Weather weather = new Weather();
+
+                        double production = network.collectEnergy(weather);
+                        double demand = city.getDailyDemand();
+
+                        if (choice == 5) {
+
+                            System.out.println("\n==============================");
+                            System.out.println("           DAY " + day);
+                            System.out.println("==============================");
+
+                            System.out.println("\n--- Weather Report ---");
+                            System.out.printf("Wind Speed: %.2f m/s\n", weather.getWindSpeed());
+                            System.out.printf("Sun Intensity: %.2f\n", weather.getSunIntensity());
+                            System.out.printf("Sun Hours: %.2f\n", weather.getSunHours());
+
+                            System.out.println("\n--- Energy Report ---");
+                            System.out.printf("Production: %.2f MWh\n", production);
+                            System.out.printf("Demand: %.2f MWh\n", demand);
+
+                            System.out.println("\n--- Storage Status ---");
+
+                            for (int i = 0; i < network.getStorageSystems().size(); i++) {
+                                EnergyStorage storage = network.getStorageSystems().get(i);
+                                System.out.println(storage);
+                            }
+                        }
+
+                        network.balanceEnergy(production, demand);
+
+                        totalProduction += production;
+                        totalDemand += demand;
+
+                        if (production < demand) {
+                            blackoutDays += 1;
+                        }
+                    }
+
+                    System.out.println("\n========= SIMULATION SUMMARY =========");
+                    System.out.printf("Total Energy Produced: %.2f MWh\n", totalProduction);
+                    System.out.printf("Total Energy Demand: %.2f MWh\n", totalDemand);
+                    System.out.println("Blackout Days: " + blackoutDays);
+
+                    break;
+
+                case 7:
+                    running = false;
+                    System.out.println("Simulation ended.");
+                    break;
+
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+        scanner.close();
+    }
+}
