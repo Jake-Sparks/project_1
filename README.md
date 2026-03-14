@@ -45,7 +45,7 @@ SMART RENEWABLE CITY SIMULATION
 6. Run Simulation (Summary Only)
 7. Exit
 
-### Step-by-Step Usage
+## Step-by-Step Usage
 
 #### 1. Create a City
 
@@ -138,7 +138,7 @@ The system then:
 - Uses storage when demand exceeds supply
 - Reports blackouts if demand cannot be met
 
-### Output
+## Output
 
 Example daily output:
 
