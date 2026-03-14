@@ -161,15 +161,17 @@ Storage Status
 - Pumped Hydro Storage: 600 / 1000 MWh
 - Hydrogen Storage: 400 / 2000 MWh
 
+-------------------------
+
 Recommended Test Scenarios:
 
 **Small City**
 
-Population: 10,000\n
-Consumption: 20\n
-Solar farm: 100 MW\n
-Wind farm: 10 turbines (3 MW)\n
-Battery: 500 MWh\n
+- Population: 10,000
+- Consumption: 20
+- Solar farm: 100 MW
+- Wind farm: 10 turbines (3 MW)
+- Battery: 500 MWh
 
 **Expected behavior:**
 
@@ -180,12 +182,12 @@ Battery: 500 MWh\n
 
 **Medium City**
 
-Population: 100,000
-Consumption: 25
-Solar farms: 2 × 300 MW
-Wind farm: 30 turbines (4 MW)
-Battery: 2000 MWh
-Hydrogen storage: 5000 MWh
+- Population: 100,000
+- Consumption: 25
+- Solar farms: 2 × 300 MW
+- Wind farm: 30 turbines (4 MW)
+- Battery: 2000 MWh
+- Hydrogen storage: 5000 MWh
 
 **Expected behavior:**
 
@@ -196,10 +198,10 @@ Hydrogen storage: 5000 MWh
 
 **Stress Test**
 
-Population: 500,000
-Consumption: 30
-Solar farm: 100 MW
-Wind farm: 10 turbines (3 MW)
+- Population: 500,000
+- Consumption: 30
+- Solar farm: 100 MW
+- Wind farm: 10 turbines (3 MW)
 
 Expected behavior:
 
@@ -211,6 +213,7 @@ Expected behavior:
 ## Scientific Context
 
 Electricity consumption varies significantly by country.
+
 Developed countries typically consume 4,000–6,000 kWh per person per year.
 
 Wind turbines today commonly produce several million kWh annually and can power around 1,500 homes per turbine.
@@ -222,6 +225,7 @@ Renewable energy systems rely heavily on capacity factors (actual output vs theo
 This model simplifies real energy systems.
 
 Not included:
+
 - electrical grid transmission limits
 - seasonal weather patterns
 - industrial energy demand
@@ -229,6 +233,7 @@ Not included:
 - grid frequency balancing
 
 The goal is to demonstrate core renewable energy concepts, not fully model national power systems.
+
 However, this is a developing on-going project thus these are areas of inclusion to be heavily considered, especially in current world circumstances.
 
 ## Learning Outcomes
