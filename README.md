@@ -46,7 +46,8 @@ SMART RENEWABLE CITY SIMULATION
 7. Exit
 
 ### Step-by-Step Usage
-1. Create a City
+
+#### 1. Create a City
 
 The city requires two parameters:
 Population
@@ -61,7 +62,7 @@ Average household electricity use in developed countries is roughly 20–30 kWh 
 
 The simulation converts this to MWh internally.
 
-2. Add Energy Sources
+#### 2. Add Energy Sources
 
 You can add multiple energy sources.
 
@@ -99,7 +100,7 @@ Typical wind turbine capacity factors:
 Onshore: 23–44%
 Offshore: higher due to stronger winds (50% or so)
 
-3. Add Energy Storage
+#### 3. Add Energy Storage
 
 The simulation supports:
 
