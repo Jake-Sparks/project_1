@@ -70,13 +70,13 @@ You can add multiple energy sources.
 
 Inputs:
 
-Capacity (MW)
-Efficiency (0–1)
+- Capacity (MW)
+- Efficiency (0–1)
 
 Example:
 
-Capacity: 200
-Efficiency: 0.9
+- Capacity: 200
+- Efficiency: 0.9
 
 Large utility-scale solar farms typically exceed 50 MW, with many modern installations averaging around 70 MW or more.
 Solar capacity factors typically range around 20–25% depending on location.
@@ -85,20 +85,20 @@ Solar capacity factors typically range around 20–25% depending on location.
 
 Inputs:
 
-Number of turbines
-Turbine capacity (MW)
-Efficiency
-Location (land/offshore)
+- Number of turbines
+- Turbine capacity (MW)
+- Efficiency
+- Location (land/offshore)
 
-Modern wind turbines commonly have:
+**Modern wind turbines commonly have:**
 
-2–4 MW capacity onshore
-8–12 MW offshore
+- 2–4 MW capacity onshore
+- 8–12 MW offshore
 
-Typical wind turbine capacity factors:
+**Typical wind turbine capacity factors:**
 
-Onshore: 23–44%
-Offshore: higher due to stronger winds (50% or so)
+- Onshore: 23–44%
+- Offshore: higher due to stronger winds (50% or so)
 
 #### 3. Add Energy Storage
 
@@ -108,7 +108,7 @@ The simulation supports:
 - Pumped hydro storage
 - Hydrogen storage
 
-Example inputs:
+**Example inputs:**
 
 Battery storage capacity: 2000 MWh
 
