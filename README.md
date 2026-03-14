@@ -3,7 +3,7 @@
 
 #### This project is a Java-based renewable energy simulation that models a simplified smart city electricity system powered by renewable sources.
 
-### The system simulates:
+#### The system simulates:
 - Renewable energy production from solar farms and wind farms.
 - Energy storage systems (battery, pumped hydro, hydrogen).
 - Daily weather variability.
@@ -66,7 +66,7 @@ The simulation converts this to MWh internally.
 
 You can add multiple energy sources.
 
-### Solar Farm
+#### Solar Farm
 
 Inputs:
 
@@ -81,7 +81,7 @@ Example:
 Large utility-scale solar farms typically exceed 50 MW, with many modern installations averaging around 70 MW or more.
 Solar capacity factors typically range around 20–25% depending on location.
 
-### Wind Farm
+#### Wind Farm
 
 Inputs:
 
@@ -108,7 +108,9 @@ The simulation supports:
 - Pumped hydro storage
 - Hydrogen storage
 
-**Example inputs:**
+----------------------------
+
+#### Example inputs:
 
 Battery storage capacity: 2000 MWh
 
@@ -116,8 +118,8 @@ Characterisitcs of the storage systems (based on real-world systems):
 
 - Storage Type----------Efficiency-----------Typical Use
 - Battery----------------95%--------------------short-term storage
-- Pumped hydro-----------80%--------------------large-scale grid storage
-- Hydrogen---------------55%--------------------long-term seasonal storage
+- Pumped hydro-------80%--------------------large-scale grid storage
+- Hydrogen------------55%--------------------long-term seasonal storage
 
 
 Users specify the number of days to simulate:
