@@ -201,7 +201,6 @@ public class SimulationRunner {
                         double demand = city.getDailyDemand();
 
                         if (choice == 5) {
-
                             System.out.println("\n==============================");
                             System.out.println("           DAY " + day);
                             System.out.println("==============================");
@@ -233,7 +232,7 @@ public class SimulationRunner {
                         }
                     }
 
-                    System.out.println("\n========= SIMULATION SUMMARY =========");
+                    System.out.println("\n========== SIMULATION SUMMARY ========");
                     System.out.printf("Total Energy Produced: %.2f MWh\n", totalProduction);
                     System.out.printf("Total Energy Demand: %.2f MWh\n", totalDemand);
                     System.out.println("Blackout Days: " + blackoutDays);

@@ -27,8 +27,24 @@ public class EnergyNetwork {
 
         return totalEnergy;
     }
+    
+    // Bubble sort used because it's a small dataset size and for simplicity
+    private void sortStorage() {
+        for (int i = 0; i < storageSystems.size(); i++) {
+            for (int j = 0; j < storageSystems.size() - 1; j++) {
+                EnergyStorage current = storageSystems.get(j);
+                EnergyStorage next = storageSystems.get(j + 1);
+
+                if (current.getPriority() > next.getPriority()) {
+                    storageSystems.set(j, next);
+                    storageSystems.set(j + 1, current);
+                }
+            }
+        }
+    }
 
     public void balanceEnergy(double totalEnergy, double demand) {
+        sortStorage();
 
         if (totalEnergy > demand) {
             double excess = totalEnergy - demand;

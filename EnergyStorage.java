@@ -4,11 +4,13 @@ public abstract class EnergyStorage {
     protected double currentEnergy;
     protected double efficiency;
     protected String name;
+    protected int priority;
 
-    public EnergyStorage(double capacity, double efficiency) {
+    public EnergyStorage(double capacity, double efficiency, int priority) {
         this.capacity = capacity;
         this.efficiency = efficiency;
         this.currentEnergy = 0;
+        this.priority = priority;
     }
 
     public double storeEnergy(double energy) {
@@ -53,5 +55,9 @@ public abstract class EnergyStorage {
 
     public String getName() {
         return name;
+    }
+
+    public int getPriority() {
+        return priority;
     }
 }
