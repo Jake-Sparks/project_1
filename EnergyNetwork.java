@@ -17,7 +17,7 @@ public class EnergyNetwork {
     public void addStorage(EnergyStorage storage) {
         storageSystems.add(storage);
     }
-    
+
     public double collectEnergy(Weather weather) {
 
         double totalEnergy = 0;
@@ -83,7 +83,7 @@ public class EnergyNetwork {
             }
 
             if (needed > 0) {
-                System.out.println("---BLACKOUT---There is not enough energy to meet demand");
+                System.out.println("---BLACKOUT----There is not enough energy to meet demand");
             }
         }
     }

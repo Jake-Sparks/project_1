@@ -50,6 +50,7 @@ public class SimulationRunner {
                     System.out.println("\nAdd Energy Source");
                     System.out.println("1. Solar Farm");
                     System.out.println("2. Wind Farm");
+                    System.out.println("3. Fossil Fuel Plant");
 
                     int sourceChoice = scanner.nextInt();
 
@@ -109,6 +110,34 @@ public class SimulationRunner {
                             
                             System.out.println("Wind farm added.");
 
+                            break;
+
+                        case 3:
+                            System.out.print("Fossil plant capacity (MW): ");
+                            double fossilCapacity = scanner.nextDouble();
+                            double fossilEfficiency;
+
+                            while (true) {
+                                System.out.print("Efficiency (0-1): ");
+                                fossilEfficiency = scanner.nextDouble();
+
+                                if (fossilEfficiency >= 0 && fossilEfficiency <= 1) {
+                                    break;
+                                }
+                        
+                                System.out.println("Invalid Input");
+                            }
+
+                            FossilFuelPlant fossil = new FossilFuelPlant(
+                                fossilCapacity,
+                                fossilEfficiency,
+                                "land",
+                                750
+                            );
+
+                            network.addEnergySource(fossil);
+
+                            System.out.println("Fossil fuel plant added.");
                             break;
 
                         default:
