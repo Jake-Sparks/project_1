@@ -30,22 +30,26 @@ public class EnergyNetwork {
     public EnergyReport collectEnergyWithCarbon(Weather weather) {
         double totalEnergy = 0;
         double totalCarbon = 0;
+        double renewableUsed = 0;
 
         for (EnergySource source:energySources) {
             if (!source.FossilBackup()) {
                 double energy = source.generateEnergy(weather);
                 totalEnergy += energy;
                 totalCarbon += energy * source.getCarbonPerMWh();
+                renewableUsed += energy;
             }
         }
 
-        return new EnergyReport(totalEnergy, totalCarbon, false, 0);
+        return new EnergyReport(totalEnergy, totalCarbon, false, 0, false, renewableUsed, 0);
     }
 
     public EnergyReport balanceEnergy(double totalEnergy, double totalCarbon, double demand) {
         sortStorage();
         boolean fossilUsed = false;
         double excessEnergy = 0;
+        boolean blackoutOccurred = false;
+        double fossilUsedEnergy = 0;
 
         if (totalEnergy > demand) {
             double excess = totalEnergy - demand;
@@ -80,11 +84,13 @@ public class EnergyNetwork {
 
                         if (fossilEnergy >= needed) {
                             totalEnergy += needed;
+                            fossilUsedEnergy += needed;
                             totalCarbon += needed * source.getCarbonPerMWh();
                             needed = 0;
                             break;
                         } else {
                             totalEnergy += fossilEnergy;
+                            fossilUsedEnergy += fossilEnergy;
                             totalCarbon += fossilEnergy * source.getCarbonPerMWh();
                             needed -= fossilEnergy;
                         }
@@ -94,11 +100,11 @@ public class EnergyNetwork {
 
             // if there is still not enough energy produced, then we will have a blackout
             if (needed > 0) {
-                System.out.println("----BLACKOUT----- Not enough energy even with fossil backup");
+                blackoutOccurred = true;
             }
         }
 
-        return new EnergyReport(totalEnergy, totalCarbon, fossilUsed, excessEnergy);
+        return new EnergyReport(totalEnergy, totalCarbon, fossilUsed, excessEnergy, blackoutOccurred, totalEnergy - fossilUsedEnergy, fossilUsedEnergy);
     }
 
     // Here bubble sort is used because it's a small dataset size and for simplicity

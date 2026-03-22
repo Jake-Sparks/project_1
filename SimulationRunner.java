@@ -252,24 +252,51 @@ public class SimulationRunner {
 
                         if (choice == 5) {
                             
+                            // weather report section
+
                             System.out.println("\n--- Weather Report ---");
                             System.out.printf("Wind Speed: %.2f m/s\n", weather.getWindSpeed());
                             System.out.printf("Sun Intensity: %.2f\n", weather.getSunIntensity());
                             System.out.printf("Sun Hours: %.2f\n", weather.getSunHours());
 
+                            // energy report section
+
                             System.out.println("\n--- Energy Report ---");
+
                             System.out.printf("Production: %.2f MWh\n", production);
                             System.out.printf("Demand: %.2f MWh\n", demand);
+
+                            double renewable = finalReport.getRenewableUsed();
+                            double fossil = finalReport.getFossilUsedEnergy();
+
+                            System.out.printf("Renewable Energy Used: %.2f MWh\n", renewable);
+                            if (fossil>0) {
+                                System.out.printf("Fossil Energy Used: %.2f MWh\n", fossil);
+                            }
+
                             if (finalReport.getExcessEnergy() > 0) {
                                 System.out.printf("Excess Energy Wasted: %.2f MWh\n", finalReport.getExcessEnergy());
                             }
+
+                            System.out.printf("Carbon Emissions Today: %.2f kg\n", carbon);
+
                             if (finalReport.isFossilUsed()) {
                                 System.out.println("Fossil backup used today");
                             } else {
                                 System.out.println("Fully powered by renewable energy");
                             }
-                            System.out.printf("Carbon Emissions Today: %.2f kg\n", carbon);
 
+                            String status;
+                            if (finalReport.isBlackoutOccurred()) {
+                                status = "CRITICAL (Blackout Occurred)";
+                            } else if (finalReport.isFossilUsed()) {
+                                status = "STRAINED (Fossil Fuel Backup has been used)";
+                            } else {
+                                status = "STABLE (Renewables Powered)";
+                            }
+                            System.out.println("System status: " + status);
+                            
+                            // storage status
 
                             System.out.println("\n--- Storage Status ---");
 
@@ -283,7 +310,7 @@ public class SimulationRunner {
                         totalDemand += demand;
                         totalCarbon += carbon;
 
-                        if (production < demand) {
+                        if (finalReport.isBlackoutOccurred()) {
                             blackoutDays += 1;
                         }
                     }
