@@ -10,6 +10,7 @@ public class SimulationRunner {
         City city = null;
         boolean running = true;
 
+
         while (running) {
 
             System.out.println("\n==== SMART RENEWABLE CITY SIMULATION ====");
@@ -55,7 +56,6 @@ public class SimulationRunner {
                     switch (sourceChoice) {
 
                         case 1:
-
                             System.out.print("Solar farm capacity (MW): ");
                             double capacity = scanner.nextDouble();
 
@@ -64,7 +64,7 @@ public class SimulationRunner {
                             while (true) {
                                 System.out.print("Efficiency (0-1): ");
                                 solarEfficiency = scanner.nextDouble();
-                                
+
                                 if (solarEfficiency >= 0 && solarEfficiency <= 1) {
                                     break;
                                 }
@@ -72,7 +72,7 @@ public class SimulationRunner {
                                 System.out.println("Invalid Input: Efficiency must be between 0 and 1");
                             }
 
-                            SolarFarm solar = new SolarFarm(capacity, solarEfficiency, "land");
+                            SolarFarm solar = new SolarFarm(capacity, solarEfficiency, "land", 0);
                             network.addEnergySource(solar);
 
                             System.out.println("Solar farm added.");
@@ -101,11 +101,12 @@ public class SimulationRunner {
                             }
 
                             System.out.print("Location (land/offshore): ");
+                            scanner.nextLine();
                             String location = scanner.nextLine();
 
-                            WindFarm wind = new WindFarm(windEfficiency, location, turbines, turbineCapacity);
+                            WindFarm wind = new WindFarm(windEfficiency, location, turbines, turbineCapacity, 0);
                             network.addEnergySource(wind);
-
+                            
                             System.out.println("Wind farm added.");
 
                             break;
@@ -192,19 +193,22 @@ public class SimulationRunner {
                     double totalProduction = 0;
                     double totalDemand = 0;
                     int blackoutDays = 0;
-
+                    double totalCarbon = 0;
+                    
                     for (int day = 1; day <= days; day++) {
 
                         Weather weather = new Weather();
 
-                        double production = network.collectEnergy(weather);
                         double demand = city.getDailyDemand();
-
+                        EnergyReport report = network.collectEnergyWithCarbon(weather);
+                        double production = report.getTotalEnergy();
+                        double carbon = report.getTotalCarbon();
+                        
                         if (choice == 5) {
                             System.out.println("\n==============================");
                             System.out.println("           DAY " + day);
                             System.out.println("==============================");
-
+                            
                             System.out.println("\n--- Weather Report ---");
                             System.out.printf("Wind Speed: %.2f m/s\n", weather.getWindSpeed());
                             System.out.printf("Sun Intensity: %.2f\n", weather.getSunIntensity());
@@ -212,6 +216,7 @@ public class SimulationRunner {
 
                             System.out.println("\n--- Energy Report ---");
                             System.out.printf("Production: %.2f MWh\n", production);
+                            System.out.printf("Carbon Emissions Today: %.2f kg\n", carbon);
                             System.out.printf("Demand: %.2f MWh\n", demand);
 
                             System.out.println("\n--- Storage Status ---");
@@ -226,6 +231,7 @@ public class SimulationRunner {
 
                         totalProduction += production;
                         totalDemand += demand;
+                        totalCarbon += carbon;
 
                         if (production < demand) {
                             blackoutDays += 1;
@@ -235,6 +241,7 @@ public class SimulationRunner {
                     System.out.println("\n========== SIMULATION SUMMARY ========");
                     System.out.printf("Total Energy Produced: %.2f MWh\n", totalProduction);
                     System.out.printf("Total Energy Demand: %.2f MWh\n", totalDemand);
+                    System.out.printf("Total Carbon Emissions: %.2f kg\n", totalCarbon);
                     System.out.println("Blackout Days: " + blackoutDays);
 
                     break;

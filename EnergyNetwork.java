@@ -17,7 +17,7 @@ public class EnergyNetwork {
     public void addStorage(EnergyStorage storage) {
         storageSystems.add(storage);
     }
-
+    
     public double collectEnergy(Weather weather) {
 
         double totalEnergy = 0;
@@ -27,8 +27,20 @@ public class EnergyNetwork {
 
         return totalEnergy;
     }
-    
-    // Bubble sort used because it's a small dataset size and for simplicity
+
+    public EnergyReport collectEnergyWithCarbon(Weather weather) {
+        double totalEnergy = 0;
+        double totalCarbon = 0;
+
+        for (EnergySource source : energySources) {
+            double energy = source.generateEnergy(weather);
+            totalEnergy += energy;
+            totalCarbon += energy * source.getCarbonPerMWh();
+        }
+        return new EnergyReport(totalEnergy, totalCarbon);
+    }
+
+    // Here bubble sort is used because it's a small dataset size and for simplicity
     private void sortStorage() {
         for (int i = 0; i < storageSystems.size(); i++) {
             for (int j = 0; j < storageSystems.size() - 1; j++) {
@@ -83,4 +95,5 @@ public class EnergyNetwork {
     public ArrayList<EnergyStorage> getStorageSystems() {
         return storageSystems;
     } 
+
 }

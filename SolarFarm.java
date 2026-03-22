@@ -1,7 +1,7 @@
 public class SolarFarm extends EnergySource {
 
-    public SolarFarm(double capacity, double efficiency, String locationType) {
-        super(capacity, efficiency, locationType);
+    public SolarFarm(double capacity, double efficiency, String locationType, double carbonPerMWh) {
+        super(capacity, efficiency, locationType, carbonPerMWh);
     }
 
     @Override

@@ -3,11 +3,13 @@ public abstract class EnergySource {
     protected double capacity;
     protected double efficiency;
     protected String locationType;
+    protected double carbonPerMWh;
 
-    public EnergySource(double capacity, double efficiency, String locationType) {
+    public EnergySource(double capacity, double efficiency, String locationType, double carbonPerMWh) {
         this.capacity = capacity;
         this.efficiency = efficiency;
         this.locationType = locationType;
+        this.carbonPerMWh = carbonPerMWh;
     }
 
     public abstract double generateEnergy(Weather weather);
@@ -18,5 +20,9 @@ public abstract class EnergySource {
 
     public double getEfficiency() {
         return efficiency;
+    }
+
+    public double getCarbonPerMWh() {
+        return carbonPerMWh;
     }
 }

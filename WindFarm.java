@@ -6,9 +6,9 @@ public class WindFarm extends EnergySource {
     private double turbineCapacity;
     private Random rand;
 
-    public WindFarm(double efficiency, String locationType, int numberOfTurbines, double turbineCapacity) {
+    public WindFarm(double efficiency, String locationType, int numberOfTurbines, double turbineCapacity, double carbonPerMWh) {
 
-        super(numberOfTurbines * turbineCapacity, efficiency, locationType);
+        super(numberOfTurbines * turbineCapacity, efficiency, locationType, carbonPerMWh);
 
         this.numberOfTurbines = numberOfTurbines;
         this.turbineCapacity = turbineCapacity;
@@ -17,7 +17,6 @@ public class WindFarm extends EnergySource {
 
     @Override
     public double generateEnergy(Weather weather) {
-
         double windSpeed = weather.getWindSpeed();
 
         // if the wind farm is off shore, there is a 20% increase in wind
