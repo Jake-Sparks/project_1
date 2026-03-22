@@ -14,6 +14,10 @@ public abstract class EnergySource {
 
     public abstract double generateEnergy(Weather weather);
 
+    public boolean FossilBackup() {
+        return false;
+    }
+
     public double getCapacity() {
         return capacity;
     }

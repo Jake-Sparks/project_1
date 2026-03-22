@@ -8,4 +8,9 @@ public class FossilFuelPlant extends EnergySource {
     public double generateEnergy(Weather weather) {
         return capacity * 24 * efficiency;
     }
+
+    @Override
+    public boolean FossilBackup() {
+        return true;
+    }
 }

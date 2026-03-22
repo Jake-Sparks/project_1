@@ -47,6 +47,11 @@ public class SimulationRunner {
 
                 case 2:
 
+                    if (city == null) {
+                        System.out.println("Please create a city first.");
+                        break;
+                    }
+
                     System.out.println("\nAdd Energy Source");
                     System.out.println("1. Solar Farm");
                     System.out.println("2. Wind Farm");
@@ -148,6 +153,11 @@ public class SimulationRunner {
 
                 case 3:
 
+                    if (city == null) {
+                        System.out.println("Please create a city first.");
+                        break;
+                    }
+
                     System.out.println("\nAdd Storage System");
                     System.out.println("1. Battery Storage");
                     System.out.println("2. Pumped Hydro Storage");
@@ -227,16 +237,20 @@ public class SimulationRunner {
                     for (int day = 1; day <= days; day++) {
 
                         Weather weather = new Weather();
-
-                        double demand = city.getDailyDemand();
-                        EnergyReport report = network.collectEnergyWithCarbon(weather);
-                        double production = report.getTotalEnergy();
-                        double carbon = report.getTotalCarbon();
                         
                         if (choice == 5) {
                             System.out.println("\n==============================");
                             System.out.println("           DAY " + day);
                             System.out.println("==============================");
+                        }
+
+                        double demand = city.getDailyDemand();
+                        EnergyReport initial = network.collectEnergyWithCarbon(weather);
+                        EnergyReport finalReport = network.balanceEnergy(initial.getTotalEnergy(), initial.getTotalCarbon(), demand);
+                        double production = finalReport.getTotalEnergy();
+                        double carbon = finalReport.getTotalCarbon();
+
+                        if (choice == 5) {
                             
                             System.out.println("\n--- Weather Report ---");
                             System.out.printf("Wind Speed: %.2f m/s\n", weather.getWindSpeed());
@@ -245,8 +259,17 @@ public class SimulationRunner {
 
                             System.out.println("\n--- Energy Report ---");
                             System.out.printf("Production: %.2f MWh\n", production);
-                            System.out.printf("Carbon Emissions Today: %.2f kg\n", carbon);
                             System.out.printf("Demand: %.2f MWh\n", demand);
+                            if (finalReport.getExcessEnergy() > 0) {
+                                System.out.printf("Excess Energy Wasted: %.2f MWh\n", finalReport.getExcessEnergy());
+                            }
+                            if (finalReport.isFossilUsed()) {
+                                System.out.println("Fossil backup used today");
+                            } else {
+                                System.out.println("Fully powered by renewable energy");
+                            }
+                            System.out.printf("Carbon Emissions Today: %.2f kg\n", carbon);
+
 
                             System.out.println("\n--- Storage Status ---");
 
@@ -255,8 +278,6 @@ public class SimulationRunner {
                                 System.out.println(storage);
                             }
                         }
-
-                        network.balanceEnergy(production, demand);
 
                         totalProduction += production;
                         totalDemand += demand;
