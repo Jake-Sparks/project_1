@@ -133,12 +133,7 @@ public class SimulationRunner {
                                 System.out.println("Invalid Input");
                             }
 
-                            FossilFuelPlant fossil = new FossilFuelPlant(
-                                fossilCapacity,
-                                fossilEfficiency,
-                                "land",
-                                750
-                            );
+                            FossilFuelPlant fossil = new FossilFuelPlant(fossilCapacity, fossilEfficiency, "land", 750);
 
                             network.addEnergySource(fossil);
 
@@ -240,7 +235,7 @@ public class SimulationRunner {
                         
                         if (choice == 5) {
                             System.out.println("\n==============================");
-                            System.out.println("           DAY " + day);
+                            System.out.println("            DAY " + day);
                             System.out.println("==============================");
                         }
 
@@ -252,40 +247,50 @@ public class SimulationRunner {
 
                         if (choice == 5) {
                             
-                            // weather report section
-
+                            // ---weather report section---
                             System.out.println("\n--- Weather Report ---");
                             System.out.printf("Wind Speed: %.2f m/s\n", weather.getWindSpeed());
                             System.out.printf("Sun Intensity: %.2f\n", weather.getSunIntensity());
                             System.out.printf("Sun Hours: %.2f\n", weather.getSunHours());
 
-                            // energy report section
-
+                            // ---energy report section---
                             System.out.println("\n--- Energy Report ---");
 
+                            // production
                             System.out.printf("Production: %.2f MWh\n", production);
+                            // demand
                             System.out.printf("Demand: %.2f MWh\n", demand);
 
+                            System.out.println("\nEnergy Breakdown:");
                             double renewable = finalReport.getRenewableUsed();
                             double fossil = finalReport.getFossilUsedEnergy();
 
+                            // how much renewable or fossil energy used?
                             System.out.printf("Renewable Energy Used: %.2f MWh\n", renewable);
                             if (fossil>0) {
                                 System.out.printf("Fossil Energy Used: %.2f MWh\n", fossil);
                             }
 
+                            // percentage of this mix of values
+                            double total = renewable + fossil;
+                            if (total > 0) {
+                                double renewablePercent = (renewable / total) * 100;
+                                double fossilPercent = (fossil / total) * 100;
+
+                                System.out.printf("Energy Mix: %.2f%% Renewable | %.2f%% Fossil\n", renewablePercent, fossilPercent);
+                            }
+
+                            System.out.println("\nSystem Impact:");
+
+                            // excess energy wasted
                             if (finalReport.getExcessEnergy() > 0) {
                                 System.out.printf("Excess Energy Wasted: %.2f MWh\n", finalReport.getExcessEnergy());
                             }
 
+                            // carbon emissions of that day
                             System.out.printf("Carbon Emissions Today: %.2f kg\n", carbon);
-
-                            if (finalReport.isFossilUsed()) {
-                                System.out.println("Fossil backup used today");
-                            } else {
-                                System.out.println("Fully powered by renewable energy");
-                            }
-
+                            
+                            // what was the status level of the city for that day
                             String status;
                             if (finalReport.isBlackoutOccurred()) {
                                 status = "CRITICAL (Blackout Occurred)";
@@ -296,8 +301,7 @@ public class SimulationRunner {
                             }
                             System.out.println("System status: " + status);
                             
-                            // storage status
-
+                            // ---storage report--
                             System.out.println("\n--- Storage Status ---");
 
                             for (int i = 0; i < network.getStorageSystems().size(); i++) {
